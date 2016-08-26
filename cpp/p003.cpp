@@ -17,11 +17,8 @@
 constexpr Long number = 600'851'475'143;
 
 int main(int, char **) {
-    std::vector<Long> primes;
     // Compute all prime numbers less than or equal to `sqrt(number)`
-    do {
-        sieve(primes, primes.size() + 100);
-    } while(primes.back() < static_cast<Long>(std::sqrt(number)));
+    auto primes = sieve(static_cast<Long>(std::sqrt(number)));
 
     auto it = std::find_if(primes.rbegin(), primes.rend(),
             [](Long x) { return x <= static_cast<Long>(std::sqrt(number)); });
