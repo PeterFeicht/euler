@@ -47,7 +47,7 @@ std::vector<Long> sieve(Long limit) {
     std::vector<Long> primes{2, 3, 5, 7, 11, 13, 17, 19};
     std::vector<char> mark;
     auto offset = primes.back() + 2;
-    while(primes.back() < limit) {
+    while(offset < limit) {
         do_sieve(primes, mark, offset, limit, maxSegmentSize);
     }
     return primes;
