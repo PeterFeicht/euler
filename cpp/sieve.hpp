@@ -35,21 +35,38 @@ void do_sieve(std::vector<Long> &primes, std::vector<char> &mark, Long &offset,
 }
 
 /**
- * Create a vector with all prime numbers up to the specified limit.
+ * Fill the specified vector with prime numbers up to the specified limit.
  *
- * @param limit The upper limit, inclusive.
- * @return A vector with all prime numbers up to and including `limit`.
+ * @param primes A vector that will be filled with at least all prime numbers up
+ *        to and including `limit`. If the specified vector is not empty, it
+ *        must already contain the first `primes.size()` prime numbers. Note
+ *        that the vector may be resized when new numbers are added, so all
+ *        iterators may be invalidated.
+ * @param limit The maximum prime number to be found (inclusive).
  */
-std::vector<Long> sieve(Long limit) {
+void sieve_limit(std::vector<Long> &primes, Long limit) {
     // The segment size roughly corresponds to the working memory in bytes
     static constexpr std::size_t maxSegmentSize = 250'000;
 
-    std::vector<Long> primes{2, 3, 5, 7, 11, 13, 17, 19};
+    if(primes.empty()) {
+        primes = {2, 3, 5, 7, 11, 13, 17, 19};
+    }
     std::vector<char> mark;
     auto offset = primes.back() + 2;
     while(offset <= limit) {
         do_sieve(primes, mark, offset, limit, maxSegmentSize);
     }
+}
+
+/**
+ * Create a vector with all prime numbers up to the specified limit.
+ *
+ * @param limit The maximum prime number to be found (inclusive).
+ * @return A vector with all prime numbers up to and including `limit`.
+ */
+std::vector<Long> sieve(Long limit) {
+    std::vector<Long> primes;
+    sieve_limit(primes, limit);
     return primes;
 }
 
@@ -58,9 +75,9 @@ std::vector<Long> sieve(Long limit) {
  *
  * @param primes A vector that will be filled with at least `n` prime numbers.
  *        If the specified vector is not empty, it must already contain the
- *        first `primes.size()` prime numbers, otherwise the result is
- *        undefined. Note that the vector may be resized, so all iterators may
- *        be invalidated (this is also true when its size is greater than `n`).
+ *        first `primes.size()` prime numbers. Note that the vector may be
+ *        resized, so all iterators may be invalidated (this is also true when
+ *        its size is greater than `n`).
  * @param n The number of prime numbers to generate (must be positive).
  * @return The `n`th prime number (2 being the 1st prime number).
  */
