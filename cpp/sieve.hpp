@@ -16,6 +16,11 @@ void do_sieve(std::vector<Long> &primes, std::vector<char> &mark, Long &offset,
 
     std::size_t segmentSize = std::min<Long>(sq(primes.back()), limit) - offset;
     segmentSize = std::min(segmentSize, maxSegmentSize);
+    if(segmentSize == 0) {
+        // In case limit == offset
+        // (when called from sieve_limit with limit == primes.back() + 2)
+        segmentSize = 1;
+    }
 
     mark.reserve(segmentSize);
     std::fill_n(mark.begin(), segmentSize, 1);
