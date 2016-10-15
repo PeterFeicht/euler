@@ -27,6 +27,7 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 using namespace std::string_literals;
