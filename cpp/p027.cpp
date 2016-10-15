@@ -27,6 +27,7 @@
 #include <iterator>
 #include <limits>
 #include <map>
+#include <ostream>
 #include <utility>
 #include <vector>
 
@@ -160,6 +161,17 @@ struct Formula
         }
         return isPrime(static_cast<Long>(tmp));
     }
+
+    friend std::ostream& operator<<(std::ostream &os, const Formula &f) {
+        os << "n^2 ";
+        if(f.a < 0) {
+            os << "- " << (-f.a);
+        } else {
+            os << "+ " << f.a;
+        }
+        os << " n + " << f.b;
+        return os;
+    }
 }; // Formula
 
 // Absolute value must be less than or equal
@@ -187,8 +199,7 @@ int main(int, char**) {
 
     std::cout << "Project Euler - Problem 27: Quadratic primes\n\n";
     std::cout << "The formula producing the most consecutive primes ("
-              << maxCount << ") is\n  n^2 + " << max.a << " n + " << max.b
-              << '\n';
+              << maxCount << ") is\n  " << max << '\n';
     std::cout << "The product of a and b is " << static_cast<int>(max) << '\n';
 }
 
